@@ -1,0 +1,206 @@
+In[161]:=
+(* =========================================================================
+   Symbolic expansion of CMT Eq. (4.1) \[LongDash] thesis of Laís Fujii dos Santos
+   =========================================================================
+   
+   Expands the triple sum \[CapitalSigma]_{\[Alpha]\[Beta]\[Gamma]} a[\[Alpha]]\[CenterDot]a[\[Beta]]*\[CenterDot]a[\[Gamma]]  with  \[Alpha]\[Minus]\[Beta]+\[Gamma]=\[Mu]
+   and classifies each term as SPM / XPM / FWM.
+
+   Key insight (verified by enumeration):
+     SPM  : triple (\[Mu],\[Mu],\[Mu])          \[LongDash] 1 triple per mode
+     XPM  : triples (\[Nu],\[Nu],\[Mu]) AND (\[Mu],\[Nu],\[Nu]) for each \[Nu]!=\[Mu]
+             both give \[Minus]i|a[\[Nu]]|²\[CenterDot]a[\[Mu]], so they sum to \[Minus]i\[CenterDot]2\[CenterDot]|a[\[Nu]]|²\[CenterDot]a[\[Mu]]
+             This is where the factor of 2 (XPM vs SPM) comes from.
+     FWM  : all remaining triples \[LongDash] genuine energy transfer between modes
+
+   Run with N_modes = 1 for 3-mode system, 2 for 5-mode, etc.
+   ========================================================================= *)
+
+(* \[HorizontalLine]\[HorizontalLine] 0. Parameters \[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine] *)
+
+Nmodes = 1;
+modes   = Range[-Nmodes, Nmodes];
+Print["Modes: ", modes, "   (", 2 Nmodes + 1, " total)"];
+
+(* \[HorizontalLine]\[HorizontalLine] 1. Phase-matched triple enumerator \[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine] *)
+
+phasematchedTriples[mu_, modeList_] :=
+  Select[Tuples[modeList, 3], (#[[1]] - #[[2]] + #[[3]] == mu) &]
+
+(* \[HorizontalLine]\[HorizontalLine] 2. Classifier \[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine] *)
+(* Term: -i \[CenterDot] a[\[Alpha]] \[CenterDot] a[\[Beta]]* \[CenterDot] a[\[Gamma]]
+   SPM : \[Alpha]=\[Beta]=\[Gamma]=\[Mu]
+   XPM : (\[Alpha]=\[Beta] \[And] \[Gamma]=\[Mu]) OR (\[Beta]=\[Gamma] \[And] \[Alpha]=\[Mu])  \[LongDash] two triples per other mode \[RightArrow] factor 2
+   FWM : everything else                                                       *)
+
+classifyTriple[{alpha_, beta_, gamma_}, mu_] :=
+  Which[
+    alpha == beta == gamma == mu,   {"SPM", mu},
+    alpha == beta && gamma == mu,   {"XPM", alpha},
+    beta  == gamma && alpha == mu,  {"XPM", beta},
+    True,                           {"FWM", Null}
+  ]
+
+(* \[HorizontalLine]\[HorizontalLine] 3. Show triples and classification \[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine] *)
+
+Print["\n=== Phase-matched triples by type ==="];
+Do[
+  triples    = phasematchedTriples[mu, modes];
+  classified = {#, classifyTriple[#, mu]} & /@ triples;
+  spm = Select[classified, #[[2, 1]] == "SPM" &];
+  xpm = Select[classified, #[[2, 1]] == "XPM" &];
+  fwm = Select[classified, #[[2, 1]] == "FWM" &];
+  Print["\n\[Mu] = ", mu, "  (", Length[triples], " total: ",
+        Length[spm], " SPM + ", Length[xpm], " XPM + ", Length[fwm], " FWM)"];
+  Print["  SPM: ", spm[[All, 1]]];
+  Print["  XPM: ", xpm[[All, 1]]];
+  Print["  FWM: ", fwm[[All, 1]]];
+  , {mu, modes}
+]
+
+(* \[HorizontalLine]\[HorizontalLine] 4. Grouped equations in thesis notation \[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine] *)
+
+Print["\n\n=== Grouped equations (thesis notation) ===\n"];
+
+Do[
+  triples = phasematchedTriples[mu, modes];
+
+  xpmSources = Cases[classifyTriple[#, mu] & /@ triples, {"XPM", nu_} :> nu];
+  xpmCounts  = Tally[xpmSources];   (* {{nu, count}, ...} *)
+  fwmTriples = Select[triples, classifyTriple[#, mu][[1]] == "FWM" &];
+
+  xpmPart = StringJoin[
+    " + " <> ToString[cnt] <> "|a[" <> ToString[nu] <> "]|²"
+    & @@@ xpmCounts
+  ];
+
+  Print["da[", mu, "]/d\[Tau] ="];
+  Print["  -(1 + i\[CapitalDelta][", mu, "]) a[", mu, "]"];
+  Print["  -i ( |a[", mu, "]|²", xpmPart, " ) a[", mu, "]"];
+  Do[
+    {al, be, ga} = t;
+    Print["  -i a[", al, "] a[", be, "]* a[", ga, "]"]
+    , {t, fwmTriples}
+  ];
+  If[mu == 0, Print["  + s"]];
+  Print[];
+  , {mu, modes}
+]
+
+(* \[HorizontalLine]\[HorizontalLine] 5. Term count vs thesis formula 3N²+3N\[Minus]\[Mu]²+1  (Eq. 4.7) \[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine] *)
+
+Print["=== Term count verification ==="];
+Do[
+  mList = Range[-n, n];
+  Do[
+    got     = Length[phasematchedTriples[mu, mList]];
+    formula = 3 n^2 + 3 n - mu^2 + 1;
+    Print["N=", n, " \[Mu]=", mu, ": got=", got, " formula=", formula,
+          If[got == formula, " \[Checkmark]", " ✗"]]
+    , {mu, mList}
+  ]
+  , {n, 1, 3}
+]
+
+(* \[HorizontalLine]\[HorizontalLine] 6. Export Python solver \[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine]\[HorizontalLine] *)
+
+pythonCode =
+"from itertools import product as iproduct
+import numpy as np
+
+def cmt_rhs(tau, state, modes, Delta, s):
+    \"\"\"
+    General N-mode CMT RHS \[LongDash] thesis Eq. (4.3).
+    Enumerates all phase-matched triples automatically.
+
+    Parameters
+    ----------
+    state : real array length 2*len(modes):
+            [Re(a[modes[0]]),...,Re(a[modes[-1]]),
+             Im(a[modes[0]]),...,Im(a[modes[-1]])]
+    modes : e.g. [-1, 0, 1]
+    Delta : callable Delta(mu)  OR  dict {mu: value}
+    s     : real drive on pump mode mu=0
+    \"\"\"
+    n   = len(modes)
+    idx = {mu: k for k, mu in enumerate(modes)}
+    a   = {mu: state[idx[mu]] + 1j*state[n + idx[mu]] for mu in modes}
+    get_D = Delta if callable(Delta) else lambda mu: Delta[mu]
+
+    da = {}
+    for mu in modes:
+        da[mu] = -(1.0 + 1j*get_D(mu)) * a[mu]          # linear
+        for alpha, beta, gamma in iproduct(modes, repeat=3):
+            if alpha - beta + gamma == mu:
+                da[mu] -= 1j * a[alpha] * np.conj(a[beta]) * a[gamma]
+        if mu == 0:
+            da[mu] += s                                    # drive
+
+    return [da[mu].real for mu in modes] + [da[mu].imag for mu in modes]
+
+
+def make_detunings(Delta_p, d2, modes):
+    \"\"\"Delta_mu = Delta_p + mu^2 * d2   (thesis Eq. 4.4b)\"\"\"
+    return {mu: Delta_p + mu**2 * d2 for mu in modes}
+";
+
+Export["cmt_general.py", pythonCode, "Text"];
+Print["\nExported: cmt_general.py"];
+
+During evaluation of In[161]:= Modes: {-1,0,1}   (3 total)
+During evaluation of In[161]:= 
+=== Phase-matched triples by type ===
+During evaluation of In[161]:= 
+\[Mu] = -1  (6 total: 1 SPM + 4 XPM + 1 FWM)
+During evaluation of In[161]:=   SPM: {{-1,-1,-1}}
+During evaluation of In[161]:=   XPM: {{-1,0,0},{-1,1,1},{0,0,-1},{1,1,-1}}
+During evaluation of In[161]:=   FWM: {{0,1,0}}
+During evaluation of In[161]:= 
+\[Mu] = 0  (7 total: 1 SPM + 4 XPM + 2 FWM)
+During evaluation of In[161]:=   SPM: {{0,0,0}}
+During evaluation of In[161]:=   XPM: {{-1,-1,0},{0,-1,-1},{0,1,1},{1,1,0}}
+During evaluation of In[161]:=   FWM: {{-1,0,1},{1,0,-1}}
+During evaluation of In[161]:= 
+\[Mu] = 1  (6 total: 1 SPM + 4 XPM + 1 FWM)
+During evaluation of In[161]:=   SPM: {{1,1,1}}
+During evaluation of In[161]:=   XPM: {{-1,-1,1},{0,0,1},{1,-1,-1},{1,0,0}}
+During evaluation of In[161]:=   FWM: {{0,-1,0}}
+During evaluation of In[161]:= 
+
+=== Grouped equations (thesis notation) ===
+
+During evaluation of In[161]:= da[-1]/d\[Tau] =
+During evaluation of In[161]:=   -(1 + i\[CapitalDelta][-1]) a[-1]
+During evaluation of In[161]:=   -i ( |a[-1]|² + cnt|a[nu]|² + cnt|a[nu]|² ) a[-1]
+During evaluation of In[161]:=   -i a[0] a[1]* a[0]
+During evaluation of In[161]:= 
+During evaluation of In[161]:= da[0]/d\[Tau] =
+During evaluation of In[161]:=   -(1 + i\[CapitalDelta][0]) a[0]
+During evaluation of In[161]:=   -i ( |a[0]|² + cnt|a[nu]|² + cnt|a[nu]|² ) a[0]
+During evaluation of In[161]:=   -i a[-1] a[0]* a[1]
+During evaluation of In[161]:=   -i a[1] a[0]* a[-1]
+During evaluation of In[161]:=   + s
+During evaluation of In[161]:= 
+During evaluation of In[161]:= da[1]/d\[Tau] =
+During evaluation of In[161]:=   -(1 + i\[CapitalDelta][1]) a[1]
+During evaluation of In[161]:=   -i ( |a[1]|² + cnt|a[nu]|² + cnt|a[nu]|² ) a[1]
+During evaluation of In[161]:=   -i a[0] a[-1]* a[0]
+During evaluation of In[161]:= 
+During evaluation of In[161]:= === Term count verification ===
+During evaluation of In[161]:= N=1 \[Mu]=-1: got=6 formula=6 \[Checkmark]
+During evaluation of In[161]:= N=1 \[Mu]=0: got=7 formula=7 \[Checkmark]
+During evaluation of In[161]:= N=1 \[Mu]=1: got=6 formula=6 \[Checkmark]
+During evaluation of In[161]:= N=2 \[Mu]=-2: got=15 formula=15 \[Checkmark]
+During evaluation of In[161]:= N=2 \[Mu]=-1: got=18 formula=18 \[Checkmark]
+During evaluation of In[161]:= N=2 \[Mu]=0: got=19 formula=19 \[Checkmark]
+During evaluation of In[161]:= N=2 \[Mu]=1: got=18 formula=18 \[Checkmark]
+During evaluation of In[161]:= N=2 \[Mu]=2: got=15 formula=15 \[Checkmark]
+During evaluation of In[161]:= N=3 \[Mu]=-3: got=28 formula=28 \[Checkmark]
+During evaluation of In[161]:= N=3 \[Mu]=-2: got=33 formula=33 \[Checkmark]
+During evaluation of In[161]:= N=3 \[Mu]=-1: got=36 formula=36 \[Checkmark]
+During evaluation of In[161]:= N=3 \[Mu]=0: got=37 formula=37 \[Checkmark]
+During evaluation of In[161]:= N=3 \[Mu]=1: got=36 formula=36 \[Checkmark]
+During evaluation of In[161]:= N=3 \[Mu]=2: got=33 formula=33 \[Checkmark]
+During evaluation of In[161]:= N=3 \[Mu]=3: got=28 formula=28 \[Checkmark]
+During evaluation of In[161]:= 
+Exported: cmt_general.py
