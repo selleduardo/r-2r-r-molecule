@@ -1,0 +1,813 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 13.2' *)
+
+Notebook[{
+
+(* ============================================================ *)
+Cell["DOPO in Asymmetric Three-Ring Photonic Molecule", "Title"],
+Cell["Dual pump on S/AS external supermodes \[Rule] parametric oscillation in central (C) supermode", "Subtitle"],
+Cell["Reference: arXiv 2602.11697 | Coupled-Mode Theory in the supermode basis", "Text"],
+
+(* ============================================================ *)
+Cell["1. Asymmetric Molecule: Bare-Ring Frequencies", "Section"],
+Cell["\
+Three coupled rings: outer rings 1 & 3, central ring 2.
+Asymmetry: outer rings may differ in FSR (d1, dp1) and GVD (d2, dp2).
+Central ring has FSR D1 and GVD D2.
+\[Mu] = azimuthal mode index relative to pump mode.", "Text"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"\[Omega]1", "[", "\[Mu]_", "]"}], ":=",
+  RowBox[{"\[Omega]0", "+",
+   RowBox[{"d1", " ", "\[Mu]"}], "+",
+   RowBox[{RowBox[{"d2", "/", "2"}], " ",
+    SuperscriptBox["\[Mu]", "2"]}]}]}]
+], "Input", CellLabel -> "In[1]:="],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"\[Omega]2", "[", "\[Mu]_", "]"}], ":=",
+  RowBox[{"\[Omega]0", "+",
+   RowBox[{"D1", " ", "\[Mu]"}], "+",
+   RowBox[{RowBox[{"D2", "/", "2"}], " ",
+    SuperscriptBox["\[Mu]", "2"]}]}]}]
+], "Input", CellLabel -> "In[2]:="],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"\[Omega]3", "[", "\[Mu]_", "]"}], ":=",
+  RowBox[{"\[Omega]0", "+",
+   RowBox[{"dp1", " ", "\[Mu]"}], "+",
+   RowBox[{RowBox[{"dp2", "/", "2"}], " ",
+    SuperscriptBox["\[Mu]", "2"]}]}]}]
+], "Input", CellLabel -> "In[3]:="],
+
+(* ============================================================ *)
+Cell["2. CMT Hamiltonian and Supermode Eigensystem", "Section"],
+Cell["\
+Nearest-neighbour coupling J. The CMT frequency matrix at mode \[Mu]:
+  \[CapitalOmega][\[Mu]] has diagonal {\[Omega]1,\[Omega]2,\[Omega]3} and off-diagonals J.
+Eigenvalues \[Rule] supermode frequencies \[Omega]S, \[Omega]C, \[Omega]AS.
+Eigenvectors \[Rule] supermode profiles bS, bC, bAS (3-component vectors over the ring basis).", "Text"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"\[CapitalOmega]", "[", "\[Mu]_", "]"}], ":=",
+  RowBox[{"{",
+   RowBox[{
+    RowBox[{"{",
+     RowBox[{
+      RowBox[{"\[Omega]1", "[", "\[Mu]", "]"}], ",",
+      "J", ",",
+      "0"}],
+    "}"}], ",",
+    RowBox[{"{",
+     RowBox[{
+      "J", ",",
+      RowBox[{"\[Omega]2", "[", "\[Mu]", "]"}], ",",
+      "J"}],
+    "}"}], ",",
+    RowBox[{"{",
+     RowBox[{
+      "0", ",",
+      "J", ",",
+      RowBox[{"\[Omega]3", "[", "\[Mu]", "]"}]}],
+    "}"}]}],
+  "}"}]}]
+], "Input", CellLabel -> "In[4]:="],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"\[Omega]S", "[", "\[Mu]_", "]"}], ":=",
+  RowBox[{
+   RowBox[{"Eigenvalues", "[",
+    RowBox[{"\[CapitalOmega]", "[", "\[Mu]", "]"}],
+   "]"}],
+   "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}]},
+ "\[IndentingNewLine]",
+ RowBox[{
+  RowBox[{"\[Omega]C", "[", "\[Mu]_", "]"}], ":=",
+  RowBox[{
+   RowBox[{"Eigenvalues", "[",
+    RowBox[{"\[CapitalOmega]", "[", "\[Mu]", "]"}],
+   "]"}],
+   "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}]},
+ "\[IndentingNewLine]",
+ RowBox[{
+  RowBox[{"\[Omega]AS", "[", "\[Mu]_", "]"}], ":=",
+  RowBox[{
+   RowBox[{"Eigenvalues", "[",
+    RowBox[{"\[CapitalOmega]", "[", "\[Mu]", "]"}],
+   "]"}],
+   "\[LeftDoubleBracket]", "3", "\[RightDoubleBracket]"}]}
+]}, "Input", CellLabel -> "In[5]:="],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"bS", "[", "\[Mu]_", "]"}], ":=",
+  RowBox[{"Normalize", "[",
+   RowBox[{
+    RowBox[{"Eigenvectors", "[",
+     RowBox[{"\[CapitalOmega]", "[", "\[Mu]", "]"}],
+    "]"}],
+    "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}],
+  "]"}]},
+ "\[IndentingNewLine]",
+ RowBox[{
+  RowBox[{"bC", "[", "\[Mu]_", "]"}], ":=",
+  RowBox[{"Normalize", "[",
+   RowBox[{
+    RowBox[{"Eigenvectors", "[",
+     RowBox[{"\[CapitalOmega]", "[", "\[Mu]", "]"}],
+    "]"}],
+    "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}],
+  "]"}]},
+ "\[IndentingNewLine]",
+ RowBox[{
+  RowBox[{"bAS", "[", "\[Mu]_", "]"}], ":=",
+  RowBox[{"Normalize", "[",
+   RowBox[{
+    RowBox[{"Eigenvectors", "[",
+     RowBox[{"\[CapitalOmega]", "[", "\[Mu]", "]"}],
+    "]"}],
+    "\[LeftDoubleBracket]", "3", "\[RightDoubleBracket]"}],
+  "]"}]}
+]}, "Input", CellLabel -> "In[6]:="],
+
+(* ============================================================ *)
+Cell["3. Numerical Parameters", "Section"],
+Cell["\
+Reference asymmetric design.
+d1, dp1 : FSR of outer rings 1 & 3   (dp1 = d1 for symmetric limit)
+d2, dp2 : GVD of outer rings 1 & 3
+D1, D2  : FSR and GVD of central ring
+J       : inter-ring coupling (half-splitting at \[Mu]=0)
+\[Kappa]       : total loss rate (same for all rings here)
+\[Omega]0      : reference frequency (0 for relative dispersion)", "Text"],
+
+Cell[BoxData[
+ RowBox[{"params", "=",
+  RowBox[{"{",
+   RowBox[{
+    RowBox[{"\[Omega]0", "\[Rule]", "0"}], ",",
+    RowBox[{"J", "\[Rule]",
+     RowBox[{"3", "/", RowBox[{"Sqrt", "[", "2", "]"}]}]}], ",",
+    RowBox[{"d1", "\[Rule]", "400"}], ",",
+    RowBox[{"d2", "\[Rule]", "1"}], ",",
+    RowBox[{"D1", "\[Rule]", "402.5"}], ",",
+    RowBox[{"D2", "\[Rule]", "1.05"}], ",",
+    RowBox[{"dp1", "\[Rule]", "400"}], ",",
+    RowBox[{"dp2", "\[Rule]", "1"}], ",",
+    RowBox[{"\[Kappa]", "\[Rule]", "1"}]}],
+  "}"}]}]
+], "Input", CellLabel -> "In[7]:="],
+
+(* ============================================================ *)
+Cell["4. Supermode Dispersion Curves", "Section"],
+Cell["Relative supermode frequencies (linear FSR of ring 1 subtracted) vs mode index \[Mu].", "Text"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"\[CapitalDelta]\[Omega]S", "[", "\[Mu]_", "]"}], ":=",
+  RowBox[{
+   RowBox[{"\[Omega]S", "[", "\[Mu]", "]"}], "-",
+   RowBox[{"d1", " ", "\[Mu]"}], "-",
+   RowBox[{RowBox[{"d2", "/", "2"}], " ",
+    SuperscriptBox["\[Mu]", "2"]}]}]},
+ "\[IndentingNewLine]",
+ RowBox[{
+  RowBox[{"\[CapitalDelta]\[Omega]C", "[", "\[Mu]_", "]"}], ":=",
+  RowBox[{
+   RowBox[{"\[Omega]C", "[", "\[Mu]", "]"}], "-",
+   RowBox[{"d1", " ", "\[Mu]"}], "-",
+   RowBox[{RowBox[{"d2", "/", "2"}], " ",
+    SuperscriptBox["\[Mu]", "2"]}]}]},
+ "\[IndentingNewLine]",
+ RowBox[{
+  RowBox[{"\[CapitalDelta]\[Omega]AS", "[", "\[Mu]_", "]"}], ":=",
+  RowBox[{
+   RowBox[{"\[Omega]AS", "[", "\[Mu]", "]"}], "-",
+   RowBox[{"d1", " ", "\[Mu]"}], "-",
+   RowBox[{RowBox[{"d2", "/", "2"}], " ",
+    SuperscriptBox["\[Mu]", "2"]}]}]}
+]}, "Input", CellLabel -> "In[8]:="],
+
+Cell[BoxData[
+ RowBox[{"Plot", "[",
+  RowBox[{
+   RowBox[{
+    RowBox[{"{",
+     RowBox[{
+      RowBox[{"\[CapitalDelta]\[Omega]S", "[", "\[Mu]", "]"}], ",",
+      RowBox[{"\[CapitalDelta]\[Omega]C", "[", "\[Mu]", "]"}], ",",
+      RowBox[{"\[CapitalDelta]\[Omega]AS", "[", "\[Mu]", "]"}]}],
+    "}"}], "/.", "params"}], ",",
+   RowBox[{"{", RowBox[{"\[Mu]", ",", "-10", ",", "10"}], "}"}], ",",
+   RowBox[{"PlotStyle", "\[Rule]",
+    RowBox[{"{", RowBox[{"Blue", ",", "Green", ",", "Red"}], "}"}]}], ",",
+   RowBox[{"PlotLegends", "\[Rule]",
+    RowBox[{"{", RowBox[{
+     "\"\<S\>\"", ",",
+     "\"\<C (quasi-dark)\>\"", ",",
+     "\"\<AS\>\""}], "}"}]}], ",",
+   RowBox[{"FrameLabel", "\[Rule]",
+    RowBox[{"{",
+     RowBox[{"\"\<Mode index \[Mu]\>\"", ",", "\"\<Relative frequency\>\""}],
+    "}"}]}], ",",
+   RowBox[{"PlotLabel", "\[Rule]", "\"\<Supermode Dispersion (asymmetric)\>\""}], ",",
+   RowBox[{"Frame", "\[Rule]", "True"}], ",",
+   RowBox[{"GridLines", "\[Rule]", "Automatic"}]}],
+ "]"}]
+], "Input", CellLabel -> "In[9]:="],
+
+(* ============================================================ *)
+Cell["5. Supermode Decay Rates", "Section"],
+Cell["\
+Each supermode inherits loss weighted by its overlap with the bus port (rings 1 & 3, not ring 2).
+\[CapitalGamma]_b[\[Mu]] = \[Kappa] \[Sum]_i |(1+\[Delta]_{i,2}) bC[0]_i Conj(b_b[\[Mu]]_i)|^2.
+The central supermode C is quasi-dark: \[CapitalGamma]C << \[CapitalGamma]S, \[CapitalGamma]AS.", "Text"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"\[CapitalGamma]S", "[", "\[Mu]_", "]"}], ":=",
+  RowBox[{"\[Kappa]", " ",
+   RowBox[{"Sum", "[",
+    RowBox[{
+     SuperscriptBox[
+      RowBox[{"Abs", "[",
+       RowBox[{
+        RowBox[{"(",
+         RowBox[{"1", "+",
+          RowBox[{"KroneckerDelta", "[", RowBox[{"2", ",", "i"}], "]"}]}],
+        ")"}], " ",
+        RowBox[{"Conjugate", "[",
+         RowBox[{
+          RowBox[{"bS", "[", "\[Mu]", "]"}],
+          "\[LeftDoubleBracket]", "i", "\[RightDoubleBracket]"}],
+        "]"}], " ",
+        RowBox[{
+         RowBox[{"bC", "[", "0", "]"}],
+         "\[LeftDoubleBracket]", "i", "\[RightDoubleBracket]"}]}],
+      "]"}], "2"], ",",
+     RowBox[{"{", RowBox[{"i", ",", "1", ",", "3"}], "}"}]}],
+   "]"}]}]},
+ "\[IndentingNewLine]",
+ RowBox[{
+  RowBox[{"\[CapitalGamma]C", "[", "\[Mu]_", "]"}], ":=",
+  RowBox[{"\[Kappa]", " ",
+   RowBox[{"Sum", "[",
+    RowBox[{
+     SuperscriptBox[
+      RowBox[{"Abs", "[",
+       RowBox[{
+        RowBox[{"(",
+         RowBox[{"1", "+",
+          RowBox[{"KroneckerDelta", "[", RowBox[{"2", ",", "i"}], "]"}]}],
+        ")"}], " ",
+        RowBox[{"Conjugate", "[",
+         RowBox[{
+          RowBox[{"bC", "[", "\[Mu]", "]"}],
+          "\[LeftDoubleBracket]", "i", "\[RightDoubleBracket]"}],
+        "]"}], " ",
+        RowBox[{
+         RowBox[{"bC", "[", "0", "]"}],
+         "\[LeftDoubleBracket]", "i", "\[RightDoubleBracket]"}]}],
+      "]"}], "2"], ",",
+     RowBox[{"{", RowBox[{"i", ",", "1", ",", "3"}], "}"}]}],
+   "]"}]}]},
+ "\[IndentingNewLine]",
+ RowBox[{
+  RowBox[{"\[CapitalGamma]AS", "[", "\[Mu]_", "]"}], ":=",
+  RowBox[{"\[Kappa]", " ",
+   RowBox[{"Sum", "[",
+    RowBox[{
+     SuperscriptBox[
+      RowBox[{"Abs", "[",
+       RowBox[{
+        RowBox[{"(",
+         RowBox[{"1", "+",
+          RowBox[{"KroneckerDelta", "[", RowBox[{"2", ",", "i"}], "]"}]}],
+        ")"}], " ",
+        RowBox[{"Conjugate", "[",
+         RowBox[{
+          RowBox[{"bAS", "[", "\[Mu]", "]"}],
+          "\[LeftDoubleBracket]", "i", "\[RightDoubleBracket]"}],
+        "]"}], " ",
+        RowBox[{
+         RowBox[{"bC", "[", "0", "]"}],
+         "\[LeftDoubleBracket]", "i", "\[RightDoubleBracket]"}]}],
+      "]"}], "2"], ",",
+     RowBox[{"{", RowBox[{"i", ",", "1", ",", "3"}], "}"}]}],
+   "]"}]}]}
+]}, "Input", CellLabel -> "In[10]:="],
+
+Cell[BoxData[
+ RowBox[{"Plot", "[",
+  RowBox[{
+   RowBox[{
+    RowBox[{"{",
+     RowBox[{
+      RowBox[{"\[CapitalGamma]S", "[", "\[Mu]", "]"}], ",",
+      RowBox[{"\[CapitalGamma]C", "[", "\[Mu]", "]"}], ",",
+      RowBox[{"\[CapitalGamma]AS", "[", "\[Mu]", "]"}]}],
+    "}"}], "/.", "params"}], ",",
+   RowBox[{"{", RowBox[{"\[Mu]", ",", "-8", ",", "8"}], "}"}], ",",
+   RowBox[{"PlotStyle", "\[Rule]",
+    RowBox[{"{",
+     RowBox[{
+      "Blue", ",",
+      RowBox[{"Directive", "[", RowBox[{"Green", ",", "Dashed"}], "]"}], ",",
+      "Red"}],
+    "}"}]}], ",",
+   RowBox[{"PlotLegends", "\[Rule]",
+    RowBox[{"{",
+     RowBox[{
+      "\"\<\[CapitalGamma]S\>\"", ",",
+      "\"\<\[CapitalGamma]C (quasi-dark)\>\"", ",",
+      "\"\<\[CapitalGamma]AS\>\""}],
+    "}"}]}], ",",
+   RowBox[{"FrameLabel", "\[Rule]",
+    RowBox[{"{",
+     RowBox[{"\"\<\[Mu]\>\"", ",", "\"\<Decay rate / \[Kappa]\>\""}],
+    "}"}]}], ",",
+   RowBox[{"PlotLabel", "\[Rule]", "\"\<Supermode Decay Rates\>\""}], ",",
+   RowBox[{"Frame", "\[Rule]", "True"}], ",",
+   RowBox[{"GridLines", "\[Rule]", "Automatic"}]}],
+ "]"}]
+], "Input", CellLabel -> "In[11]:="],
+
+(* ============================================================ *)
+Cell["6. FWM Nonlinear Overlap Integrals", "Section"],
+Cell["\
+DOPO scheme: pump photons in S(\[Mu]p) and AS(-\[Mu]p) \[Rule] signal+idler pair in C(0).
+FWM overlap: \[CapitalLambda]DOPO[\[Mu]p] = \[Sum]_i bS[\[Mu]p]_i bAS[-\[Mu]p]_i Conj(bC[0]_i)^2.
+Large |\[CapitalLambda]| AND small \[CapitalGamma]C together minimise threshold.", "Text"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"FWMOverlap", "[",
+   RowBox[{"v1_", ",", "v2_", ",", "w1_", ",", "w2_"}],
+  "]"}], ":=",
+  RowBox[{"Sum", "[",
+   RowBox[{
+    RowBox[{
+     RowBox[{"v1", "\[LeftDoubleBracket]", "i", "\[RightDoubleBracket]"}], " ",
+     RowBox[{"v2", "\[LeftDoubleBracket]", "i", "\[RightDoubleBracket]"}], " ",
+     RowBox[{"Conjugate", "[",
+      RowBox[{"w1", "\[LeftDoubleBracket]", "i", "\[RightDoubleBracket]"}],
+     "]"}], " ",
+     RowBox[{"Conjugate", "[",
+      RowBox[{"w2", "\[LeftDoubleBracket]", "i", "\[RightDoubleBracket]"}],
+     "]"}]}], ",",
+    RowBox[{"{", RowBox[{"i", ",", "1", ",", "3"}], "}"}]}],
+  "]"}]}]
+], "Input", CellLabel -> "In[12]:="],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"\[CapitalLambda]DOPO", "[", "\[Mu]p_", "]"}], ":=",
+  RowBox[{"FWMOverlap", "[",
+   RowBox[{
+    RowBox[{"bS", "[", "\[Mu]p", "]"}], ",",
+    RowBox[{"bAS", "[", RowBox[{"-", "\[Mu]p"}], "]"}], ",",
+    RowBox[{"bC", "[", "0", "]"}], ",",
+    RowBox[{"bC", "[", "0", "]"}]}],
+  "]"}]},
+ "\[IndentingNewLine]",
+ RowBox[{
+  RowBox[{"\[CapitalLambda]TypeI", "[", "\[Mu]p_", "]"}], ":=",
+  RowBox[{"FWMOverlap", "[",
+   RowBox[{
+    RowBox[{"bS", "[", "\[Mu]p", "]"}], ",",
+    RowBox[{"bS", "[", RowBox[{"-", "\[Mu]p"}], "]"}], ",",
+    RowBox[{"bC", "[", "0", "]"}], ",",
+    RowBox[{"bC", "[", "0", "]"}]}],
+  "]"}]},
+ "\[IndentingNewLine]",
+ RowBox[{
+  RowBox[{"\[CapitalLambda]ASAS", "[", "\[Mu]p_", "]"}], ":=",
+  RowBox[{"FWMOverlap", "[",
+   RowBox[{
+    RowBox[{"bAS", "[", "\[Mu]p", "]"}], ",",
+    RowBox[{"bAS", "[", RowBox[{"-", "\[Mu]p"}], "]"}], ",",
+    RowBox[{"bC", "[", "0", "]"}], ",",
+    RowBox[{"bC", "[", "0", "]"}]}],
+  "]"}]}
+]}, "Input", CellLabel -> "In[13]:="],
+
+Cell[BoxData[
+ RowBox[{"Plot", "[",
+  RowBox[{
+   RowBox[{
+    RowBox[{"{",
+     RowBox[{
+      RowBox[{"Abs", "[", RowBox[{"\[CapitalLambda]DOPO", "[", "\[Mu]p", "]"}], "]"}], ",",
+      RowBox[{"Abs", "[", RowBox[{"\[CapitalLambda]TypeI", "[", "\[Mu]p", "]"}], "]"}], ",",
+      RowBox[{"Abs", "[", RowBox[{"\[CapitalLambda]ASAS", "[", "\[Mu]p", "]"}], "]"}]}],
+    "}"}], "/.", "params"}], ",",
+   RowBox[{"{", RowBox[{"\[Mu]p", ",", "1", ",", "8"}], "}"}], ",",
+   RowBox[{"PlotStyle", "\[Rule]",
+    RowBox[{"{",
+     RowBox[{
+      RowBox[{"Directive", "[", RowBox[{"Blue", ",", "Thick"}], "]"}], ",",
+      RowBox[{"Directive", "[", RowBox[{"Red", ",", "Dashed"}], "]"}], ",",
+      RowBox[{"Directive", "[", RowBox[{"Orange", ",", "DotDashed"}], "]"}]}],
+    "}"}]}], ",",
+   RowBox[{"PlotLegends", "\[Rule]",
+    RowBox[{"{",
+     RowBox[{
+      "\"\<|\[CapitalLambda]| S+AS\[Rule]C+C\>\"", ",",
+      "\"\<|\[CapitalLambda]| S+S\[Rule]C+C\>\"", ",",
+      "\"\<|\[CapitalLambda]| AS+AS\[Rule]C+C\>\""}],
+    "}"}]}], ",",
+   RowBox[{"FrameLabel", "\[Rule]",
+    RowBox[{"{",
+     RowBox[{"\"\<Pump mode \[Mu]p\>\"", ",", "\"\<|\[CapitalLambda]|\>\""}],
+    "}"}]}], ",",
+   RowBox[{"PlotLabel", "\[Rule]", "\"\<FWM Overlaps vs Pump Index\>\""}], ",",
+   RowBox[{"Frame", "\[Rule]", "True"}], ",",
+   RowBox[{"GridLines", "\[Rule]", "Automatic"}]}],
+ "]"}]
+], "Input", CellLabel -> "In[14]:="],
+
+(* ============================================================ *)
+Cell["7. Phase-Matching Conditions", "Section"],
+Cell["\
+DOPO energy conservation: \[Omega]S[\[Mu]p] + \[Omega]AS[-\[Mu]p] = 2\[Omega]C[0].
+Mismatch \[CapitalDelta]\[Omega]DOPO[\[Mu]p] = \[Omega]S[\[Mu]p] + \[Omega]AS[-\[Mu]p] - 2\[Omega]C[0].
+Competing processes (AS+AS and S+S) must be simultaneously mismatched.
+The asymmetric design allows phase-matching exactly one \[Mu]p.", "Text"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"\[CapitalDelta]\[Omega]DOPO", "[", "\[Mu]p_", "]"}], ":=",
+  RowBox[{
+   RowBox[{"\[Omega]S", "[", "\[Mu]p", "]"}], "+",
+   RowBox[{"\[Omega]AS", "[", RowBox[{"-", "\[Mu]p"}], "]"}], "-",
+   RowBox[{"2", " ", RowBox[{"\[Omega]C", "[", "0", "]"}]}]}]},
+ "\[IndentingNewLine]",
+ RowBox[{
+  RowBox[{"\[CapitalDelta]\[Omega]ASAS", "[", "\[Mu]p_", "]"}], ":=",
+  RowBox[{
+   RowBox[{"\[Omega]AS", "[", "\[Mu]p", "]"}], "+",
+   RowBox[{"\[Omega]AS", "[", RowBox[{"-", "\[Mu]p"}], "]"}], "-",
+   RowBox[{"2", " ", RowBox[{"\[Omega]C", "[", "0", "]"}]}]}]},
+ "\[IndentingNewLine]",
+ RowBox[{
+  RowBox[{"\[CapitalDelta]\[Omega]SS", "[", "\[Mu]p_", "]"}], ":=",
+  RowBox[{
+   RowBox[{"\[Omega]S", "[", "\[Mu]p", "]"}], "+",
+   RowBox[{"\[Omega]S", "[", RowBox[{"-", "\[Mu]p"}], "]"}], "-",
+   RowBox[{"2", " ", RowBox[{"\[Omega]C", "[", "0", "]"}]}]}]}
+]}, "Input", CellLabel -> "In[15]:="],
+
+Cell[BoxData[
+ RowBox[{"Plot", "[",
+  RowBox[{
+   RowBox[{
+    RowBox[{"{",
+     RowBox[{
+      RowBox[{"\[CapitalDelta]\[Omega]DOPO", "[", "\[Mu]p", "]"}], ",",
+      RowBox[{"\[CapitalDelta]\[Omega]ASAS", "[", "\[Mu]p", "]"}], ",",
+      RowBox[{"\[CapitalDelta]\[Omega]SS", "[", "\[Mu]p", "]"}]}],
+    "}"}], "/.", "params"}], ",",
+   RowBox[{"{", RowBox[{"\[Mu]p", ",", "1", ",", "10"}], "}"}], ",",
+   RowBox[{"PlotStyle", "\[Rule]",
+    RowBox[{"{",
+     RowBox[{
+      "Blue", ",",
+      RowBox[{"Directive", "[", RowBox[{"Red", ",", "Dashed"}], "]"}], ",",
+      RowBox[{"Directive", "[", RowBox[{"Orange", ",", "DotDashed"}], "]"}]}],
+    "}"}]}], ",",
+   RowBox[{"PlotLegends", "\[Rule]",
+    RowBox[{"{",
+     RowBox[{
+      "\"\<\[CapitalDelta]\[Omega] S+AS\[Rule]2C\>\"", ",",
+      "\"\<\[CapitalDelta]\[Omega] AS+AS\[Rule]2C\>\"", ",",
+      "\"\<\[CapitalDelta]\[Omega] S+S\[Rule]2C\>\""}],
+    "}"}]}], ",",
+   RowBox[{"FrameLabel", "\[Rule]",
+    RowBox[{"{",
+     RowBox[{"\"\<Pump mode \[Mu]p\>\"", ",", "\"\<Frequency mismatch\>\""}],
+    "}"}]}], ",",
+   RowBox[{"PlotLabel", "\[Rule]", "\"\<Phase-Matching Landscape\>\""}], ",",
+   RowBox[{"Frame", "\[Rule]", "True"}], ",",
+   RowBox[{"GridLines", "\[Rule]", "Automatic"}],
+   RowBox[{"Epilog", "\[Rule]",
+    RowBox[{"{",
+     RowBox[{
+      RowBox[{"Directive", "[", RowBox[{"Dashed", ",", "Gray"}], "]"}], ",",
+      RowBox[{"Line", "[",
+       RowBox[{"{",
+        RowBox[{
+         RowBox[{"{", RowBox[{"1", ",", "0"}], "}"}], ",",
+         RowBox[{"{", RowBox[{"10", ",", "0"}], "}"}]}],
+       "}"}],
+      "]"}]}],
+    "}"}]}]}],
+ "]"}]
+], "Input", CellLabel -> "In[16]:="],
+
+(* ============================================================ *)
+Cell["8. Parametric Gain Matrix for the Central Supermode", "Section"],
+Cell["\
+Stability matrix for the degenerate signal/idler pair (both in C at \[Mu]=0):
+  G = {{ -i(\[CapitalGamma]C[\[Mu]p] Pp - \[CapitalDelta]C),   i \[CapitalLambda]DOPO[\[Mu]p] Pp },
+        { -i Conj[\[CapitalLambda]DOPO[\[Mu]p]] Pp,  -i(\[CapitalGamma]C[\[Mu]p] Pp - \[CapitalDelta]C) }}
+Pp = normalised intracavity pump photon number, \[CapitalDelta]C = signal detuning.
+Re[Eigenvalue] > 0 signals parametric oscillation.", "Text"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"GMatrixC", "[",
+   RowBox[{"\[Mu]p_", ",", "Pp_", ",", "\[CapitalDelta]C_"}],
+  "]"}], ":=",
+  RowBox[{"{",
+   RowBox[{
+    RowBox[{"{",
+     RowBox[{
+      RowBox[{
+       RowBox[{"-", "I"}], " ",
+       RowBox[{"(",
+        RowBox[{
+         RowBox[{RowBox[{"\[CapitalGamma]C", "[", "\[Mu]p", "]"}], " ", "Pp"}],
+         "-", "\[CapitalDelta]C"}],
+       ")"}]}], ",",
+      RowBox[{"I", " ",
+       RowBox[{"\[CapitalLambda]DOPO", "[", "\[Mu]p", "]"}], " ", "Pp"}]}],
+    "}"}], ",",
+    RowBox[{"{",
+     RowBox[{
+      RowBox[{
+       RowBox[{"-", "I"}], " ",
+       RowBox[{"Conjugate", "[",
+        RowBox[{"\[CapitalLambda]DOPO", "[", "\[Mu]p", "]"}],
+       "]"}], " ", "Pp"}], ",",
+      RowBox[{
+       RowBox[{"-", "I"}], " ",
+       RowBox[{"(",
+        RowBox[{
+         RowBox[{RowBox[{"\[CapitalGamma]C", "[", "\[Mu]p", "]"}], " ", "Pp"}],
+         "-", "\[CapitalDelta]C"}],
+       ")"}]}]}],
+    "}"}]}],
+  "}"}]}]
+], "Input", CellLabel -> "In[17]:="],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"GainC", "[",
+   RowBox[{"\[Mu]p_", ",", "Pp_", ",", "\[CapitalDelta]C_"}],
+  "]"}], ":=",
+  RowBox[{"Max", "[",
+   RowBox[{"Re", "[",
+    RowBox[{"Eigenvalues", "[",
+     RowBox[{"GMatrixC", "[",
+      RowBox[{"\[Mu]p", ",", "Pp", ",", "\[CapitalDelta]C"}],
+     "]"}],
+    "]"}],
+   "]"}],
+  "]"}]}]
+], "Input", CellLabel -> "In[18]:="],
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[",
+  RowBox[{
+   RowBox[{"Plot", "[",
+    RowBox[{
+     RowBox[{
+      RowBox[{"GainC", "[", RowBox[{"\[Mu]p", ",", "Pp", ",", "0"}], "]"}],
+      "/.", "params"}], ",",
+     RowBox[{"{", RowBox[{"Pp", ",", "0", ",", "5"}], "}"}], ",",
+     RowBox[{"FrameLabel", "\[Rule]",
+      RowBox[{"{",
+       RowBox[{"\"\<Pump power Pp\>\"", ",", "\"\<Gain Re[\[Lambda]]\>\""}],
+      "}"}]}], ",",
+     RowBox[{"PlotLabel", "\[Rule]",
+      RowBox[{"Row", "[",
+       RowBox[{"{", RowBox[{"\"\<DOPO Gain, \[Mu]p = \>\"", ",", "\[Mu]p"}], "}"}],
+      "]"}]}], ",",
+     RowBox[{"Frame", "\[Rule]", "True"}], ",",
+     RowBox[{"GridLines", "\[Rule]", "Automatic"}], ",",
+     RowBox[{"PlotRange", "\[Rule]", "Full"}], ",",
+     RowBox[{"Epilog", "\[Rule]",
+      RowBox[{"{",
+       RowBox[{
+        RowBox[{"Directive", "[", RowBox[{"Dashed", ",", "Gray"}], "]"}], ",",
+        RowBox[{"Line", "[",
+         RowBox[{"{",
+          RowBox[{
+           RowBox[{"{", RowBox[{"0", ",", "0"}], "}"}], ",",
+           RowBox[{"{", RowBox[{"5", ",", "0"}], "}"}]}],
+         "}"}],
+        "]"}]}],
+      "}"}]}]}],
+   "]"}], ",",
+   RowBox[{"{",
+    RowBox[{
+     RowBox[{"{", RowBox[{"\[Mu]p", ",", "1", ",", "\"\<Pump \[Mu]p\>\""}], "}"}], ",",
+     "1", ",", "8", ",", "1", ",",
+     "Appearance", "\[Rule]", "\"\<Labeled\>\""}],
+   "}"}]}],
+ "]"}]
+], "Input", CellLabel -> "In[19]:="],
+
+(* ============================================================ *)
+Cell["9. Oscillation Threshold vs. Pump Mode Index", "Section"],
+Cell["\
+At threshold (zero detuning): Pp_th = \[CapitalGamma]C[\[Mu]p] / |\[CapitalLambda]DOPO[\[Mu]p]|.
+Minimum threshold where |\[CapitalLambda]| is large and \[CapitalGamma]C is small.", "Text"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"PpThreshold", "[", "\[Mu]p_", "]"}], ":=",
+  RowBox[{
+   RowBox[{"\[CapitalGamma]C", "[", "\[Mu]p", "]"}], "/",
+   RowBox[{"Abs", "[",
+    RowBox[{"\[CapitalLambda]DOPO", "[", "\[Mu]p", "]"}],
+   "]"}]}]}]
+], "Input", CellLabel -> "In[20]:="],
+
+Cell[BoxData[
+ RowBox[{"ListPlot", "[",
+  RowBox[{
+   RowBox[{
+    RowBox[{"Table", "[",
+     RowBox[{
+      RowBox[{"{",
+       RowBox[{"\[Mu]p", ",",
+        RowBox[{"PpThreshold", "[", "\[Mu]p", "]"}]}],
+      "}"}], ",",
+      RowBox[{"{", RowBox[{"\[Mu]p", ",", "1", ",", "8"}], "}"}]}],
+    "]"}], "/.", "params"}], ",",
+   RowBox[{"Joined", "\[Rule]", "True"}], ",",
+   RowBox[{"PlotStyle", "\[Rule]",
+    RowBox[{"Directive", "[",
+     RowBox[{"Blue", ",", RowBox[{"PointSize", "[", "0.02", "]"}]}],
+    "]"}]}], ",",
+   RowBox[{"FrameLabel", "\[Rule]",
+    RowBox[{"{",
+     RowBox[{"\"\<Pump mode \[Mu]p\>\"", ",", "\"\<Threshold Pp_th\>\""}],
+    "}"}]}], ",",
+   RowBox[{"PlotLabel", "\[Rule]", "\"\<DOPO Oscillation Threshold vs \[Mu]p\>\""}], ",",
+   RowBox[{"Frame", "\[Rule]", "True"}], ",",
+   RowBox[{"GridLines", "\[Rule]", "Automatic"}]}],
+ "]"}]
+], "Input", CellLabel -> "In[21]:="],
+
+(* ============================================================ *)
+Cell["10. Gain Map: Pump Power vs. Signal Detuning", "Section"],
+Cell["Oscillation tongue (Re[\[Lambda]] > 0) as a function of pump power and signal detuning for each \[Mu]p.", "Text"],
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[",
+  RowBox[{
+   RowBox[{"DensityPlot", "[",
+    RowBox[{
+     RowBox[{
+      RowBox[{"GainC", "[",
+       RowBox[{"\[Mu]p", ",", "Pp", ",", "\[CapitalDelta]C"}],
+      "]"}], "/.", "params"}], ",",
+     RowBox[{"{", RowBox[{"\[CapitalDelta]C", ",", "-3", ",", "3"}], "}"}], ",",
+     RowBox[{"{", RowBox[{"Pp", ",", "0", ",", "5"}], "}"}], ",",
+     RowBox[{"ColorFunction", "\[Rule]", "\"\<TemperatureMap\>\""}], ",",
+     RowBox[{"PlotLegends", "\[Rule]", "Automatic"}], ",",
+     RowBox[{"FrameLabel", "\[Rule]",
+      RowBox[{"{",
+       RowBox[{"\"\<Signal detuning \[CapitalDelta]C\>\"", ",", "\"\<Pump power Pp\>\""}],
+      "}"}]}], ",",
+     RowBox[{"PlotLabel", "\[Rule]",
+      RowBox[{"Row", "[",
+       RowBox[{"{", RowBox[{"\"\<Gain map, \[Mu]p = \>\"", ",", "\[Mu]p"}], "}"}],
+      "]"}]}]}],
+   "]"}], ",",
+   RowBox[{"{",
+    RowBox[{
+     RowBox[{"{", RowBox[{"\[Mu]p", ",", "1", ",", "\"\<Pump \[Mu]p\>\""}], "}"}], ",",
+     "1", ",", "8", ",", "1", ",",
+     "Appearance", "\[Rule]", "\"\<Labeled\>\""}],
+   "}"}]}],
+ "]"}]
+], "Input", CellLabel -> "In[22]:="],
+
+(* ============================================================ *)
+Cell["11. Design Diagnostics Summary", "Section"],
+Cell["Finds the optimal pump mode \[Mu]p (minimum phase mismatch) and prints a full report.", "Text"],
+
+Cell[BoxData[
+ RowBox[{"Module", "[",
+  RowBox[{
+   RowBox[{"{",
+    RowBox[{"muList", ",", "mismatches", ",", "\[Mu]pOpt"}],
+   "}"}], ",",
+   RowBox[{
+    RowBox[{"muList", "=", RowBox[{"Range", "[", RowBox[{"1", ",", "8"}], "]"}]}], ";",
+    RowBox[{"mismatches", "=",
+     RowBox[{
+      RowBox[{"Table", "[",
+       RowBox[{
+        RowBox[{"Abs", "[",
+         RowBox[{"\[CapitalDelta]\[Omega]DOPO", "[", "\[Mu]p", "]"}],
+        "]"}], ",",
+        RowBox[{"{", RowBox[{"\[Mu]p", ",", "muList"}], "}"}]}],
+      "]"}], "/.", "params"}]}], ";",
+    RowBox[{"\[Mu]pOpt", "=",
+     RowBox[{"muList", "\[LeftDoubleBracket]",
+      RowBox[{"First", "@",
+       RowBox[{"Ordering", "[", RowBox[{"mismatches", ",", "1"}], "]"}]}],
+     "\[RightDoubleBracket]"}]}], ";",
+    RowBox[{"Print", "[", "\"\<=== DOPO Design Summary ===\>\"", "]"}], ";",
+    RowBox[{"Print", "[",
+     RowBox[{"Row", "[",
+      RowBox[{"{", RowBox[{"\"\<Optimal pump mode \[Mu]p = \>\"", ",", "\[Mu]pOpt"}], "}"}],
+     "]"}],
+    "]"}], ";",
+    RowBox[{"Print", "[",
+     RowBox[{"Row", "[",
+      RowBox[{"{",
+       RowBox[{
+        "\"\<Phase mismatch \[CapitalDelta]\[Omega] = \>\"", ",",
+        RowBox[{"N", "[",
+         RowBox[{
+          RowBox[{"\[CapitalDelta]\[Omega]DOPO", "[", "\[Mu]pOpt", "]"}],
+          "/.", "params"},
+         "4"]"}]}],
+      "}"}],
+     "]"}],
+    "]"}], ";",
+    RowBox[{"Print", "[",
+     RowBox[{"Row", "[",
+      RowBox[{"{",
+       RowBox[{
+        "\"\<FWM Overlap |\[CapitalLambda]| = \>\"", ",",
+        RowBox[{"N", "[",
+         RowBox[{
+          RowBox[{"Abs", "[",
+           RowBox[{"\[CapitalLambda]DOPO", "[", "\[Mu]pOpt", "]"}],
+          "]"}], "/.", "params"},
+         "4"]"}]}],
+      "}"}],
+     "]"}],
+    "]"}], ";",
+    RowBox[{"Print", "[",
+     RowBox[{"Row", "[",
+      RowBox[{"{",
+       RowBox[{
+        "\"\<Pump decay \[CapitalGamma]S = \>\"", ",",
+        RowBox[{"N", "[",
+         RowBox[{
+          RowBox[{"\[CapitalGamma]S", "[", "\[Mu]pOpt", "]"}],
+          "/.", "params"},
+         "4"]"}]}],
+      "}"}],
+     "]"}],
+    "]"}], ";",
+    RowBox[{"Print", "[",
+     RowBox[{"Row", "[",
+      RowBox[{"{",
+       RowBox[{
+        "\"\<Signal decay \[CapitalGamma]C = \>\"", ",",
+        RowBox[{"N", "[",
+         RowBox[{
+          RowBox[{"\[CapitalGamma]C", "[", "\[Mu]pOpt", "]"}],
+          "/.", "params"},
+         "4"]"}], ",",
+        "\"\< (quasi-dark)\>\""}],
+      "}"}],
+     "]"}],
+    "]"}], ";",
+    RowBox[{"Print", "[",
+     RowBox[{"Row", "[",
+      RowBox[{"{",
+       RowBox[{
+        "\"\<AS pump decay \[CapitalGamma]AS = \>\"", ",",
+        RowBox[{"N", "[",
+         RowBox[{
+          RowBox[{"\[CapitalGamma]AS", "[", "\[Mu]pOpt", "]"}],
+          "/.", "params"},
+         "4"]"}]}],
+      "}"}],
+     "]"}],
+    "]"}], ";",
+    RowBox[{"Print", "[",
+     RowBox[{"Row", "[",
+      RowBox[{"{",
+       RowBox[{
+        "\"\<Threshold Pp_th = \>\"", ",",
+        RowBox[{"N", "[",
+         RowBox[{
+          RowBox[{"PpThreshold", "[", "\[Mu]pOpt", "]"}],
+          "/.", "params"},
+         "4"]"}]}],
+      "}"}],
+     "]"}],
+    "]"}]}]}],
+ "]"}]
+], "Input", CellLabel -> "In[23]:="]
+
+}, WindowSize -> {1200, 800}]
