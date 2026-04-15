@@ -71,7 +71,7 @@ function complex_noise(n)
 end
 
 # Define parameter ranges
-Δ_p1_values = -3:0.05:17 # THIS IS THE CORRECT WAY (SOFT EXCITATION), DETUNING SMALL -> BIG
+Δ_p1_values = -3:1:17 # THIS IS THE CORRECT WAY (SOFT EXCITATION), DETUNING SMALL -> BIG
 results = DataFrame(Iteration=Float64[], Δ=Float64[], a_n1=ComplexF64[], a0=ComplexF64[], a1=ComplexF64[])
 
 
