@@ -1,12 +1,40 @@
-\documentclass{article}
+\documentclass[11pt]{article}
 
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\usepackage[left = 2.cm, right = 2.cm, top = 2.5cm, bottom = 2.cm]{geometry}
 \usepackage{pdflscape}
+
 \begin{document}
-\begin{equation}
-    \begin{array}{c}
-     i f_{-1}^{-1,-1,-1} (a(-1)(\tau ))^2 (a(-1)(\tau ))^*+i f_{-1}^{-1,0,0} a(0)(\tau ) a(-1)(\tau ) (a(0)(\tau ))^*+i f_{-1}^{0,0,-1} a(0)(\tau ) a(-1)(\tau ) (a(0)(\tau ))^*+i f_{-1}^{-1,1,1} a(1)(\tau ) a(-1)(\tau ) (a(1)(\tau ))^*+i f_{-1}^{1,1,-1} a(1)(\tau ) a(-1)(\tau ) (a(1)(\tau ))^*+i f_{-1}^{0,1,0} (a(0)(\tau ))^2 (a(1)(\tau ))^*-i \Delta (-1) a(-1)(\tau )-\frac{\kappa (-1) a(-1)(\tau )}{\kappa (0)}+s \\
-     i f_{0}^{0,0,0} (a(0)(\tau ))^2 (a(0)(\tau ))^*+i f_{0}^{-1,-1,0} a(-1)(\tau ) a(0)(\tau ) (a(-1)(\tau ))^*+i f_{0}^{0,-1,-1} a(-1)(\tau ) a(0)(\tau ) (a(-1)(\tau ))^*+i f_{0}^{0,1,1} a(1)(\tau ) a(0)(\tau ) (a(1)(\tau ))^*+i f_{0}^{1,1,0} a(1)(\tau ) a(0)(\tau ) (a(1)(\tau ))^*+i f_{0}^{-1,0,1} a(-1)(\tau ) a(1)(\tau ) (a(0)(\tau ))^*+i f_{0}^{1,0,-1}a(-1)(\tau ) a(1)(\tau ) (a(0)(\tau ))^*-a(0)(\tau ) \\
-     i f_{1}^{0,-1,0} (a(0)(\tau ))^2 (a(-1)(\tau ))^*+i f_{1}^{0,0,1} a(1)(\tau ) a(0)(\tau ) (a(0)(\tau ))^*+i f_{1}^{1,0,0} a(1)(\tau ) a(0)(\tau ) (a(0)(\tau ))^*+i f_{1}^{1,1,1}(a(1)(\tau ))^2 (a(1)(\tau ))^*+i f_{1}^{-1,-1,1} a(-1)(\tau ) a(1)(\tau ) (a(-1)(\tau ))^*+i f_{1}^{1,-1,-1} a(-1)(\tau ) a(1)(\tau ) (a(-1)(\tau ))^*-i \Delta (1) a(1)(\tau)-\frac{\kappa (1) a(1)(\tau )}{\kappa (0)}+s \\
-    \end{array}
-\end{equation}
+
+\begin{equation*}
+    \begin{aligned}
+        \dot{a}_{-1} &= -\left(\dfrac{\kappa_{-1}}{\kappa_0} + i \Delta_{-1}\right)a_{-1} + 
+        i \left(
+            f_{-1}^{-1,-1,-1} \vert a_{-1}\vert^2 + 
+            2f_{-1}^{0,0,-1} \vert a_0\vert^2 + 
+            2f_{-1}^{1,1,-1} \vert a_1\vert^2
+            \right)a_{-1} + 
+        if_{-1}^{0,1,0} a_0^2a_1^* + s_{-1} \\
+        %
+        %
+        \dot{a}_{0} &= -\left(1 + i \Delta_{0}\right)a_0 +  
+        i \left(
+            2f_{0}^{-1,-1,0} \vert a_{-1}\vert^2 + 
+            f_{0}^{0,0,0} \vert a_0\vert^2 + 
+            2f_{0}^{1,1,0} \vert a_1\vert^2
+            \right)a_0 + 
+        2if_{0}^{-1,0,1}a_{-1} a_0^* a_1\\
+        %
+        %
+        \dot{a}_{1} &= -\left(\dfrac{\kappa_1}{\kappa_0} + i\Delta_1\right)a_ 1 + 
+        i\left(2 f_{1}^{-1,-1,1} \vert a_{-1}\vert^2 +
+        2 f_{1}^{0,0,1} \vert a_0\vert^2 +
+        f_{1}^{1,1,1}\vert a_1\vert^2*
+        \right)a_1 + 
+        i f_{1}^{0,-1,0} a_0^2a_{-1}^* + s_1
+        \end{aligned}
+\end{equation*}
+
 \end{document}
